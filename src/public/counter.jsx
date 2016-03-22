@@ -1,6 +1,12 @@
 const React = require('react')
 const {connect} = require('react-redux')
 
+function doSave(value) {
+    return fetch('/save?value=' + value, {
+        method: 'POST'
+    })
+}
+
 class Counter extends React.Component {
   render() {
     const {value} = this.props;
@@ -10,6 +16,7 @@ class Counter extends React.Component {
         <button style={{ marginRight: 10 }} onClick={() => this.props.dispatch({ type: 'DEC' }) }>-</button>
         <span>{value}</span>
         <button style={{ marginLeft: 10 }} onClick={() => this.props.dispatch({ type: 'INC' }) }>+</button>
+        <button style={{marginLeft: 10}} onClick={() => doSave(value)}>Save</button>
       </div>
     )
   }

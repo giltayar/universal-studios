@@ -3,11 +3,12 @@ const React = require('react')
 const ReactDomServer = require('react-dom/server')
 const rootFactory = require('./src/public/Root.jsx')
 const {createStore} = require('./src/public/createStore.jsx')
+const fs = require('fs')
 
 const app = express()
 
 app.use('/index.html', (req, res) => {
-  const initialState = parseInt(req.query['start-from'] || '0')
+  const initialState = parseInt(fs.readFileSync('data.txt', {encoding: 'UTF-8'}))
   const store = createStore(initialState)
   const Root = rootFactory(store)
   
@@ -23,6 +24,12 @@ app.use('/index.html', (req, res) => {
 })
 
 app.use('/bundle.js', express.static(__dirname + '/lib/public/bundle.js'));
+
+app.use('/save', (req, res) => {
+    fs.writeFileSync('data.txt', req.query['value'].toString())
+    
+    res.end()
+})
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Listening...')
