@@ -7,7 +7,7 @@ const {createStore} = require('./src/public/createStore.jsx')
 const app = express()
 
 app.use('/index.html', (req, res) => {
-  const initialState = 0
+  const initialState = parseInt(req.query['start-from'] || '0')
   const store = createStore(initialState)
   const Root = rootFactory(store)
   
@@ -15,6 +15,7 @@ app.use('/index.html', (req, res) => {
     <html>
       <body>
         <div id="root">${ReactDomServer.renderToString(<Root />)}</div>
+        <script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>
         <script src="bundle.js"></script>
       </body>
     </html>

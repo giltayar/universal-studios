@@ -4,7 +4,7 @@ const helloWorld = require('./hello.jsx')
 const rootFactory = require('./Root.jsx')
 const {createStore} = require('./createStore.jsx')
 
-const initialState = 0
+const initialState = window.__INITIAL_STATE__
 const store = createStore(initialState)
 const Root = rootFactory(store)
 
