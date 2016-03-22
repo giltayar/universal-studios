@@ -1,22 +1,24 @@
 const React = require('react')
+const {connect} = require('react-redux')
 
-module.exports = class Counter extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: 0
-    }
-  }
-
+class Counter extends React.Component {
   render() {
-    const {value} = this.state;
+    const {value} = this.props;
 
     return (
       <div>
-        <button style={{ marginRight: 10 }} onClick={() => this.setState({ value: value - 1 }) }>-</button>
+        <button style={{ marginRight: 10 }} onClick={() => this.props.dispatch({ type: 'DEC' }) }>-</button>
         <span>{value}</span>
-        <button style={{ marginLeft: 10 }} onClick={() => this.setState({ value: value + 1 }) }>+</button>
+        <button style={{ marginLeft: 10 }} onClick={() => this.props.dispatch({ type: 'INC' }) }>+</button>
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    value: state
+  };
+}
+
+module.exports = connect(mapStateToProps)(Counter);
