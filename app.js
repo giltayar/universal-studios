@@ -1,6 +1,7 @@
 const express = require('express')
+const React = require('react')
 const ReactDomServer = require('react-dom/server')
-const helloWorld = require('./src/public/hello.jsx')
+const Counter = require('./src/public/counter.jsx')
 
 const app = express()
 
@@ -8,7 +9,7 @@ app.use('/index.html', (req, res) => res.send(`
 <html>
     <body>
         <div id="root">
-            ${ReactDomServer.renderToString(helloWorld)}
+            ${ReactDomServer.renderToString(<Counter />)}
         </div>
         <script src="bundle.js"></script>
     </body>
