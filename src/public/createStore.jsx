@@ -1,4 +1,5 @@
-const {createStore} = require('redux')
+const {createStore, applyMiddleware} = require('redux')
+const thunk = require('redux-thunk').default
 
 function counterReducer(state = 0, action) {
   switch (action.type) {
@@ -6,11 +7,15 @@ function counterReducer(state = 0, action) {
       return state + 1
     case 'DEC':
       return state - 1
+    case 'SET':
+      return action.value
     default:
       return state
   }
 }
 
 exports.createStore = function(initialState) {
-  return createStore(counterReducer, initialState)    
+  const finalCreateStore = applyMiddleware(thunk)(createStore)
+  
+  return finalCreateStore(counterReducer, initialState)    
 }
